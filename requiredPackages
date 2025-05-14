@@ -1,0 +1,116 @@
+ 1. transformers
+📦 Hugging Face Transformers Library
+
+pip install transformers
+
+🔍 Why you need it:
+  Core library for loading pre-trained models and tokenizers (like mistral, llama, falcon, etc.)
+  Used for training, inference, and text generation
+  Provides Trainer and TrainingArguments classes
+  Supports models in both encoder (BERT-style) and decoder (GPT-style) formats
+
+Used for:
+Loading models: AutoModelForCausalLM, AutoTokenizer
+Defining training pipeline
+Model inference and text generation after fine-tuning
+
+✅ 2. datasets
+📦 Hugging Face Datasets Library
+
+pip install datasets
+🔍 Why you need it:
+For loading, preprocessing, and managing datasets
+Supports large-scale datasets in streaming mode
+Makes it easy to load formats like JSON, CSV, Parquet, etc.
+
+🛠️ Used for:
+Loading datasets: load_dataset("alpaca")
+Splitting into train/test
+Tokenizing and batching for model training
+
+✅ 3. accelerate
+📦 Training and hardware acceleration manager
+
+pip install accelerate
+🔍 Why you need it:
+Seamlessly handles training across:
+  CPU
+  GPU
+  Multi-GPU
+  FP16 (mixed precision)
+Simplifies launching training without manually managing CUDA devices
+
+🛠️ Used for:
+Running training loops efficiently
+Works under the hood of transformers.Trainer
+Required when you use bitsandbytes or mixed precision training
+
+✅ 4. peft
+📦 Parameter-Efficient Fine-Tuning library by Hugging Face
+pip install peft
+
+🔍 Why you need it:
+Implements LoRA, Prefix Tuning, IA3, etc.
+Fine-tunes only a small number of weights instead of full model
+Saves memory, reduces compute needs — ideal for local setup
+🛠️ Used for:
+Applying LoRA to models:
+
+from peft import get_peft_model, LoraConfig
+Integrates with Hugging Face Trainer
+
+✅ 5. bitsandbytes
+📦 8-bit & 4-bit quantization backend
+
+pip install bitsandbytes
+🔍 Why you need it:
+Allows loading large models (like mistral-7b) in 8-bit or 4-bit
+Saves VRAM/GPU memory
+Works with transformers and peft
+
+🛠️ Used for:
+Loading model in quantized format:
+
+model = AutoModelForCausalLM.from_pretrained("mistral", load_in_8bit=True)
+⚠️ Requires GPU with CUDA. If using CPU, this won’t help.
+
+✅ 6. loralib
+📦 Core library for LoRA math
+
+pip install loralib
+🔍 Why you need it:
+Backend dependency used by peft for LoRA implementation
+Contains low-rank decomposition logic and matrix operations
+
+🛠️ Used for:
+Under the hood by peft during training and inference
+
+✅ 7. sentencepiece
+📦 Tokenizer for sentence-level models (like LLaMA, T5)
+
+pip install sentencepiece
+🔍 Why you need it:
+Some LLMs (e.g., LLaMA, T5, Mistral) use SentencePiece-based tokenizers instead of WordPiece or Byte-level BPE
+
+🛠️ Used for:
+Tokenizing inputs correctly before training or inference
+
+Required for models like:
+mistralai/Mistral-7B
+facebook/mbart
+meta-llama/Llama-2-7b-hf
+
+✅ 8. trl (Transformers Reinforcement Learning)
+📦 Training library with SFTTrainer, PPO, DPO
+
+pip install trl
+🔍 Why you need it:
+Provides custom SFTTrainer (Supervised Fine-Tuning Trainer) for instruction-tuning
+Supports Reinforcement Learning from Human Feedback (RLHF)
+Compatible with peft, transformers, and datasets
+
+🛠️ Used for:
+Simple training loop:
+
+from trl import SFTTrainer
+Often preferred over vanilla transformers.Trainer for SFT
