@@ -1,0 +1,91 @@
+1. What are CUDA devices in Accelerate?
+  🔸 CUDA Devices:
+  CUDA = NVIDIA’s API for GPU programming
+  
+  In accelerate, CUDA devices refer to GPUs used for training/inference acceleration.
+  
+  🔸 Local Setup Without GPU:
+  If you don’t have a GPU, accelerate falls back to CPU.
+  
+  During accelerate config, just select:
+  compute_environment: No distributed training
+  mixed_precision: no
+  use_cpu: True
+2. Difference between CPU and GPU
+
+| Feature          | CPU                       | GPU                                         |
+| ---------------- | ------------------------- | ------------------------------------------- |
+| Architecture     | Few powerful cores        | Many lightweight cores (1000s)              |
+| Parallelism      | Good for sequential tasks | Great for parallel matrix ops (tensor math) |
+| Speed (for LLM)  | Very slow                 | 10x to 100x faster                          |
+| Cost             | Available by default      | Needs dedicated hardware                    |
+| Memory Bandwidth | Lower                     | Higher                                      |
+
+In context of training LLMs:
+CPU: okay for small model training or inference (e.g. TinyLlama)
+
+GPU: required for training/fine-tuning large models (1B+ parameters)
+
+3. Is LoRA a concept and PEFT its implementation?
+Yes. ✅
+
+🔸 LoRA = Concept
+LoRA (Low-Rank Adaptation) is a parameter-efficient fine-tuning technique.
+
+Paper: "LoRA: Low-Rank Adaptation of Large Language Models"
+
+🔸 PEFT = Implementation
+Hugging Face peft library implements LoRA and other similar tuning methods (Prefix, Prompt, AdaLoRA etc.) 
+
+4. What is bitsandbytes? Why 8bit/4bit quantization?
+🔸 bitsandbytes:
+Library by Tim Dettmers for quantization and memory-efficient inference/training
+
+Supports 8-bit and 4-bit models
+Works with Hugging Face to load quantized models using:
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+
+5.  Why Quantize?
+
+| Benefit                             | Explanation                            |
+| ----------------------------------- | -------------------------------------- |
+| Memory savings                      | 16-bit → 8-bit cuts model size in half |
+| Run large models on small GPUs      | e.g., LLaMA 7B on 8GB VRAM             |
+| Speedup inference                   | Smaller numbers = faster tensor math   |
+| Enable fine-tuning on consumer GPUs | With LoRA + quantization               |
+
+6. Can we fit large models on local with bitsandbytes?
+Yes, if you:
+
+Use 4-bit or 8-bit quantized models (like Mistral 7B in 4-bit)
+Combine with LoRA to only update small adapter layers
+On CPU, this is still slow. You can run quantized models, but fine-tuning will be limited to very small batches and will take a long time.
+
+
+7. Why do we tokenize inputs before training or inference?
+🔸 LLMs don’t process raw text
+They only understand token IDs — integer representations of subwords or characters.
+
+What is tokenization?
+Converts text like:
+
+"Hello world!"
+Into:
+
+[15496, 995]
+These IDs come from a model-specific vocabulary.
+
+🔸 Why it’s needed:
+
+| Purpose              | Explanation                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------- |
+| Uniform input format | Models expect integer sequences, not strings                                          |
+| Batch processing     | Efficient parallel training by converting variable-length text to padded token arrays |
+| Matching tokenizer   | Must use **same tokenizer** as used during pretraining (else IDs mismatch)            |
+
+
+During training:
+You tokenize all text in your dataset into token IDs
+
+Then pass these into the model as input_ids, attention_mask, and optionally labels
+
