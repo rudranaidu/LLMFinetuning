@@ -1,0 +1,30 @@
+          ┌────────────────────────────────────────────┐
+          │                Training Phase              │
+          └────────────────────────────────────────────┘
+                  │
+     Millions of sentences (text data)
+                  │
+        → Tokenized into IDs
+                  │
+        → Embedded using initial weights
+                  │
+        → Pass through transformer layers
+        → Predict next token
+        → Compute loss
+        → Adjust weights via backpropagation
+                  ↓
+          ┌────────────────────────┐
+          │   Trained Weights =    │
+          │   Model Knowledge ✅    │
+          └────────────────────────┘
+
+          ┌────────────────────────────────────────────┐
+          │              Inference Phase               │
+          └────────────────────────────────────────────┘
+                 │
+    Your prompt → Tokenized → Embeddings
+                 ↓
+         → Pass through same layers (using saved weights)
+         → Generate next token, then next, ...
+                 ↓
+         → Output prediction ✅
