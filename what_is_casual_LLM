@@ -1,0 +1,28 @@
+A Causal Language Model is a type of language model that predicts the next word (token) in a sentence based only on the previous words — not future ones.
+🧾 Think of it like typing in a messaging app. You’ve typed a few words, and the app tries to guess what you might type next.
+
+🔁 How it Works
+* It’s trained to model the probability of text like this:
+  P(w_1, w_2, w_3, ..., w_n) = P(w_1) \cdot P(w_2 | w_1) \cdot P(w_3 | w_1, w_2) \cdot ... \cdot P(w_n | w_1, ..., w_{n-1})
+  👉 This means:
+  * Word 2 is predicted from Word 1
+  * Word 3 from Words 1 & 2
+  * And so on...
+
+It Does Not Look Ahead
+Causal = uni-directional
+It doesn't "peek" at future words like a masked language model (e.g., BERT).
+It only knows the past context, never the future.
+
+Input: "The dog chased the"
+Model Output: "cat"
+
+The model used only the words before "cat" to generate it — not what comes after
+
+ Contrast with Other Models
+
+| Model Type                       | Looks at                 | Use Case                            |
+| -------------------------------- | ------------------------ | ----------------------------------- |
+| **Causal LM (e.g. GPT, Falcon)** | Past only                | Text generation, chatbots           |
+| **Masked LM (e.g. BERT)**        | Both past and future     | Fill-in-the-blank tasks, embeddings |
+| **Seq2Seq (e.g. T5, BART)**      | Separate encoder-decoder | Translation, summarization          |
