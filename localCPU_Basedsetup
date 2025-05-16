@@ -1,0 +1,10 @@
+Create virtual environment
+    python3 -m venv training
+    source training/bin/activate
+    
+
+vim requirements.txt
+
+transformers datasets accelerate peft bitsandbytes loralib sentencepiece trl
+
+pip install -r requirements.txt
