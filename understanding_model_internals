@@ -1,0 +1,79 @@
+1. What is Falcon-RW-1B?
+A causal language model from the Falcon family by TII (Technology Innovation Institute).
+
+"RW" = Refined Web, trained on high-quality web data.
+
+"1B" = 1.3 billion parameters — a relatively small model suitable for CPU inference.
+
+2. How to Use/Download the Model
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+model_id = "tiiuae/falcon-rw-1b"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+
+These functions automatically:
+
+Download model files from Hugging Face (https://huggingface.co/tiiuae/falcon-rw-1b)
+
+Store them in ~/.cache/huggingface/ locally for reuse
+
+3. Downloaded Files & Their Purpose
+File	Description
+pytorch_model.bin or .safetensors	Main file containing model weights (~2.6 GB)
+config.json	Architecture details (layers, hidden size, etc.)
+tokenizer.json	Complete tokenizer vocab and merge rules
+vocab.json + merges.txt	Used by BPE (Byte-Pair Encoding) tokenizers
+tokenizer_config.json	Tokenizer metadata/config
+special_tokens_map.json	Special token info (e.g., [PAD], [EOS])
+generation_config.json	Default generation settings like max_new_tokens, temperature
+
+4. What Are Model Weights?
+Model weights are learned parameters during training.
+In Falcon-RW-1B, there are ~1.3 billion weights (~2.6 GB in FP32).
+These define:
+  Embeddings
+  Transformer blocks (attention & feedforward layers)
+  Final output layer
+
+👉 They are the "knowledge" of the model — learned from huge text datasets.
+
+5. Relation Between Transformer Blocks and Parameters
+  Each transformer block has:
+  Multi-head attention layers
+  Feed-forward neural network (MLPs)
+  LayerNorm layers
+  More blocks → more layers → more weights/parameters
+  Falcon-RW-1B has ~24 layers
+
+So:
+Total Parameters ≈ Layers × Weights per layer + Embeddings + Output Head
+
+6. Training & How Weights Are Learned
+Step-by-step process:
+Input: "The cat sat on the ___"
+Model guesses: "banana"
+Loss is computed between guess and true word ("mat")
+Gradients are calculated using backpropagation
+Weights are adjusted using optimizers (like Adam)
+
+🔁 Repeated billions of times during training → weights get updated to capture knowledge.
+
+7. How Weights Are Used at Inference Time
+  a. Embedding Generation
+  Token IDs → embeddings using learned weights
+  b. Attention Calculation
+  Q, K, V = Linear layers (with learned weights)
+
+  Attention is based on how similar the queries and keys are
+
+  c. Output Generation
+  Final hidden state passed through a linear layer with weights
+
+  Produces logits → next token prediction
+
+8. Are 1.3 Billion Parameters = 1.3 Billion Weights?
+  ✅ Yes, mostly true.
+  Each parameter = weight or bias value
+  So, a model with 1.3B parameters has ~1.3B learnable numbers
+
