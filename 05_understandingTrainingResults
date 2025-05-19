@@ -25,3 +25,13 @@ The model is learning slowly, but stably (learning rate is small).
 The model is early in the training process (epoch is small).
 The model's predictions are not perfect, but it's getting better (loss is moderate).
 As training progresses, we would expect the loss to decrease, the gradient norm to stabilize, and the model's performance to improve.
+
+
+Evaluation results:
+evaluation was performed after completing 1 full pass through the training dataset.
+
+{'eval_loss': 0.4678971469402313, 'eval_accuracy': 0.878, 'eval_runtime': 10.2039, 'eval_samples_per_second': 49.001, 'eval_steps_per_second': 12.25, 'epoch': 1.0}
+
+The model is performing reasonably well on the validation set, with an accuracy of 87.8% and a loss of 0.4679.
+The evaluation process took approximately 10.20 seconds.
+The model can process around 49 samples per second during evaluation.
