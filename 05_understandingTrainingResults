@@ -1,0 +1,27 @@
+Sample Data item in the training result through console
+
+{'loss': 0.7007, 'grad_norm': 2.9846608638763428, 'learning_rate': 4.9550000000000005e-05, 'epoch': 0.02}
+
+Loss (0.7007)
+The loss is a measure of how well the model is doing on the training data. It's calculated using a loss function, which compares the model's predictions with the actual labels.
+The loss function calculates the difference between the model's predictions and the actual labels. A common loss function for binary classification problems like this is Binary Cross-Entropy Loss.
+In our case, the loss is 0.7007, which means the model's predictions are not perfect, and there's room for improvement. A lower loss value would indicate better performance.
+
+Gradient Norm (2.9846608638763428)
+The gradient norm is a measure of how large the updates are that the model is making to its weights. 
+It's calculated as the magnitude of the gradient vector. Think of the gradient as a direction in which the model needs to move to minimize the loss.
+A large gradient norm means the model is making large updates, which can be good for learning quickly, but also risks overshooting the optimal solution.
+
+Learning Rate (4.9550000000000005e-05)
+The learning rate controls how large the updates are that the model makes to its weights. A high learning rate means the model learns quickly, but may overshoot the optimal solution. A low learning rate means the model learns slowly, but is more stable.
+In this case, the learning rate is 4.955e-05, which is a relatively small value. This means the model is making small, incremental updates to its weights.
+
+Epoch (0.02)
+The epoch is a measure of how far through the training process we are. An epoch is a single pass through the entire training dataset.
+In this case, the epoch is 0.02, which means we're very early in the training process. The model has only seen a small fraction of the training data so far.
+To put it all together:
+The model is making small, stable updates to its weights (gradient norm is small).
+The model is learning slowly, but stably (learning rate is small).
+The model is early in the training process (epoch is small).
+The model's predictions are not perfect, but it's getting better (loss is moderate).
+As training progresses, we would expect the loss to decrease, the gradient norm to stabilize, and the model's performance to improve.
