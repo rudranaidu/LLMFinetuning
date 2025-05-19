@@ -1,6 +1,5 @@
 Training a binary classifier model  "distilbert-base-uncased"
 
-
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer, pipeline
 import numpy as np
