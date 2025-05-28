@@ -25,4 +25,7 @@
 7. How can you improve tool calling? 
     Gorilla paper shows by adding API documentation to your examples
 8. One step further for tool calls: 
-    ToolLLM paper shows combining a DFS like algorithm to curate synthetic annotations. 
+    ToolLLM paper shows combining a DFS like algorithm to curate synthetic annotations.
+
+
+https://github.com/meta-llama/synthetic-data-kit/tree/main/use-cases/awesome-synthetic-data-papers
