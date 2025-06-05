@@ -29,3 +29,5 @@
 
 
 https://github.com/meta-llama/synthetic-data-kit/tree/main/use-cases/awesome-synthetic-data-papers
+
+Finetuning resources ; https://github.com/mlabonne/llm-course
